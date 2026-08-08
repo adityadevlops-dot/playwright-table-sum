@@ -1,0 +1,33 @@
+name: Run Playwright Scraper
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch: # Allows you to run the action manually from GitHub website
+
+jobs:
+  scrape-and-sum:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the code from your repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Node.js environment
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # Step 3: Install Playwright dependencies
+      - name: Install Playwright
+        run: npm install playwright
+
+      # Step 4: Install browser binaries (Chromium)
+      - name: Install Chromium browser
+        run: npx playwright install chromium
+
+      # Step 5: Run the script (Note your email address is included in the step name as required)
+      - name: Run script for 23f2005214@ds.study.iitm.ac.in
+        run: node scrape.js
